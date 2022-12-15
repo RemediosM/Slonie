@@ -1,42 +1,23 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class ElephantInput {
-
-    private static final String SPACE = " ";
 
     private int elephantQty;
     private int[] elephantWeight;
     private int[] currentPositions;
     private int[] expectedPositions;
 
-    public void readInput(String filePath) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-           elephantQty = Integer.parseInt(br.readLine());
-           elephantWeight = splitBySpace(br.readLine());
-           currentPositions = splitBySpaceAndSubtractOne(br.readLine());
-           expectedPositions = splitBySpaceAndSubtractOne(br.readLine());
-        } catch (IOException exception) {
-
+    public void readInput(String[] args) {
+        elephantQty = Integer.parseInt(args[0]);
+        int[] tab = new int[elephantQty];
+        int[] tab2 = new int[elephantQty];
+        int[] tab3 = new int[elephantQty];
+        for(int i = 0; i < elephantQty; i++){
+            tab[i] = Integer.parseInt(args[i+1]);
+            tab2[i] = Integer.parseInt(args[elephantQty + i + 1]) - 1;
+            tab3[i] = Integer.parseInt(args[2 * elephantQty + i + 1]) - 1;
         }
-    }
-
-    private int[] splitBySpace(String text) {
-        return Arrays.stream(text.split(SPACE))
-                .mapToInt(Integer::valueOf)
-                .toArray();
-    }
-
-    private int[] splitBySpaceAndSubtractOne(String text) {
-        return Arrays.stream(text.split(SPACE))
-                .mapToInt(Integer::valueOf)
-                .map(i -> i - 1)
-                .toArray();
+        elephantWeight = tab;
+        currentPositions = tab2;
+        expectedPositions = tab3;
     }
 
     public int getElephantQty() {
@@ -54,4 +35,5 @@ public class ElephantInput {
     public int[] getExpectedPositions() {
         return expectedPositions;
     }
+
 }
